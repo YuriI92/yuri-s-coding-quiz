@@ -58,3 +58,23 @@ main button {
 main button:hover {
     background-color: var(--primary);
 }
+
+.main-style {
+    text-align: left;
+    margin-right: 280px;
+    margin-left: 280px;
+}
+
+.answer-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.answer-btn {
+    text-align: left;
+    width: 50vh;
+}
+
+.answer {
+    margin: 5px 0 5px 30px;
+}

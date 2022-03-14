@@ -61,7 +61,7 @@ var startQuiz = function() {
 }
 
 var switchQuestion = function(i) {
-    var sectionArea = document.querySelector("#section-area");
+    var sectionArea = document.querySelector("#section-area");    
     
     var titleArea = document.querySelector("#title-area");
     titleArea.innerHTML = quizQuestions[i].question;
@@ -70,13 +70,17 @@ var switchQuestion = function(i) {
     answerListEl.className = "answer-list";
 
     for (choice in quizQuestions[i].answers) {
-        var listItemEl = document.createElement("li");
-        listItemEl.innerHTML = "<button class='answer'>" + quizQuestions[0].answers[choice] + "</button>";
-        answerListEl.appendChild(listItemEl);
+        var listItemEl = document.createElement("button");
+        listItemEl.className = "answer-btn"
+        listItemEl.innerHTML = "<li class='answer'>" + quizQuestions[0].answers[choice] + "</button>";
+        answerListEl.appendChild(listItemEl);        
         console.log(listItemEl);
     }
 
     sectionArea.appendChild(answerListEl);
+
+    var mainEl = document.querySelector("main");
+    mainEl.className = "main-style"
 }
 
 startEl.addEventListener("click", startQuiz);
