@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+header p {
+    padding: 50px 60px 40px 45px;
+}
+
+.high-score {
+    color: #DA5CDE;
+}
