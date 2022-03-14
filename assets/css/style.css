@@ -1,5 +1,7 @@
 :root {
     --primary: #DA5CDE;
+    --secondary: #401A9F;
+    --tertiary: #FFFFFF;
 }
 
 * {
@@ -47,8 +49,8 @@ main button {
     padding: 10px 25px;
     margin-top: 15px;
     font-size: 27px;
-    color: #FFFFFF;
-    background-color: #401A9F;
+    color: var(--tertiary);
+    background-color: var(--secondary);
     border-radius: 10px;
     border-style: none;
 }
