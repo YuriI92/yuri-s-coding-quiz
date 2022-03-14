@@ -23,7 +23,7 @@ header p {
     margin-bottom: 20px;
 }
 
-.high-score {
+.high-scores {
     color: var(--primary);
 }
 
@@ -34,7 +34,7 @@ main {
 
 main h1 {
     font-size: 42px;
-    line-height: 2;
+    padding: 15px;
 }
 
 main p {
