@@ -1,23 +1,28 @@
+var mainEl = document.querySelector("main");
+var titleArea = document.querySelector("#title-area");
+var sectionAreaEl = document.querySelector("#section-area");
 var startEl = document.querySelector("#start-btn");
 
 var quizQuestions = [
     {
         question: "Commonly used data types DO Not Include:",
         answers: {
-            a: "strings",
-            b: "booleans",
-            c: "alerts",
-            d: "numbers",
-        }
+            1: "strings",
+            2: "booleans",
+            3: "alerts",
+            4: "numbers"
+        },
+        correctAnswer: "alerts"
     },
     {
         question: "The condition in an if / else statement is enclosed with ________.",
         answers: {
-            a: "quotes",
-            b: "curly brackets",
-            c: "parenthesis",
-            d: "square brackets",
-        }
+            1: "quotes",
+            2: "curly brackets",
+            3: "parenthesis",
+            4: "square brackets"
+        },
+        correctAnswer: 3
     },
     {
         question: "Arrays in JavaScript can be used to store ________.",
@@ -25,8 +30,9 @@ var quizQuestions = [
             a: "numbers and strings",
             b: "other arrays",
             c: "booleans",
-            d: "all of the above",
-        }
+            d: "all of the above"
+        },
+        correctAnswer: "d"
     },
     {
         question: "String values must be enclosed within ________ when being assigned to variables.",
@@ -34,8 +40,9 @@ var quizQuestions = [
             a: "commas",
             b: "curly brackets",
             c: "quotes",
-            d: "parenthesis",
-        }
+            d: "parenthesis"
+        },
+        correctAnswer: "c"
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
@@ -43,44 +50,78 @@ var quizQuestions = [
             a: "JavaScript",
             b: "terminal/bash",
             c: "for loops",
-            d: "console.log",
-        }
-    },
+            d: "console.log"
+        },
+        correctAnswer: "d"
+    }
 ]
 
-// console.log(quizQuestions[0]);
-// console.log(quizQuestions[0].answers);
+console.log(quizQuestions[0]);
+console.log(quizQuestions[0].answers);
 
 var startQuiz = function() {
     var instruction = document.querySelector("#instruction");
 
-    instruction.remove();
-    startEl.remove();
-
-    switchQuestion(0);
+    // if (startEl === "<button id='start-btn'>Start Quiz</button>") {
+        instruction.remove();
+        startEl.remove();
+    
+        switchQuestion(0);        
+    // }
 }
+
+// var idCounter = 1;
 
 var switchQuestion = function(i) {
-    var sectionArea = document.querySelector("#section-area");    
-    
-    var titleArea = document.querySelector("#title-area");
-    titleArea.innerHTML = quizQuestions[i].question;
+    mainEl.className = "main-style";
 
-    var answerListEl = document.createElement("ol");
-    answerListEl.className = "answer-list";
+    // for (var i = 0; i < quizQuestions.length; i++) {
+        titleArea.innerHTML = quizQuestions[i].question;
 
-    for (choice in quizQuestions[i].answers) {
-        var listItemEl = document.createElement("button");
-        listItemEl.className = "answer-btn"
-        listItemEl.innerHTML = "<li class='answer'>" + quizQuestions[0].answers[choice] + "</button>";
-        answerListEl.appendChild(listItemEl);        
-        console.log(listItemEl);
-    }
+        var answerListEl = document.createElement("ol");
+        answerListEl.className = "answer-list";
 
-    sectionArea.appendChild(answerListEl);
+        for (choice in quizQuestions[i].answers) {
+            var listItemEl = document.createElement("button");
+            listItemEl.className = "answer-btn"
+            listItemEl.innerHTML = "<li class='answer'>" + quizQuestions[i].answers[choice] + "</li>";
+            // listItemEl.innerHTML = "<li class='answer' id='" + idCounter + "'>" + quizQuestions[i].answers[choice] + "</li>";
+            answerListEl.appendChild(listItemEl);     
+            
 
-    var mainEl = document.querySelector("main");
-    mainEl.className = "main-style"
+            // if (quizQuestions[i].answers[choice] === quizQuestions[i].correctAnswer) {
+            //     document.getElementsByClassName("answer").setAttribute("id", "correct-answer");
+            // }
+            // idCounter++;
+            console.log(listItemEl);
+        }
+
+        sectionAreaEl.appendChild(answerListEl);
+
+        confirmAnswer(i);
+    // }
 }
 
-startEl.addEventListener("click", startQuiz);
+var confirmAnswer = function(questionNo) {
+    var answerChoices = document.querySelectorAll(".answer-btn");
+    
+    for (var i = 0; i < answerChoices.length; i++) {
+        answerChoices[i].addEventListener("click", function(event) {
+            var selectedAnswer = this.textContent;
+            var resultSection = document.createElement("section");
+            resultSection.className = "section-border";
+            mainEl.appendChild(resultSection);
+
+            if (selectedAnswer === quizQuestions[questionNo].correctAnswer) {
+                resultSection.innerHTML = "<p>Correct!</p>";
+            } else {
+                resultSection.innerHTML = "<p>Wrong!</p>";
+            }
+
+            console.dir(selectedAnswer);
+            console.log(resultSection);
+        });
+    }
+}
+
+startEl.addEventListener("click", startQuiz, true);
