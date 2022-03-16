@@ -137,9 +137,9 @@ var confirmAnswer = function(selectedBtn) {
     
     // if the answer user selected is the correct answer, it will show "Correct" and if it's wrong show "Wrong"
     if (selectedAnswer === correctAnswer) {
-        resultSection.innerHTML = "<p>Correct!</p>";
+        resultSection.innerHTML = "<p class='result'>Correct!</p>";
     } else {
-        resultSection.innerHTML = "<p>Wrong!</p>";
+        resultSection.innerHTML = "<p class='result'>Wrong!</p>";
     }
 
     nextQuestionHandler();

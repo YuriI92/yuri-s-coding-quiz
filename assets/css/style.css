@@ -78,3 +78,15 @@ main button:hover {
 .answer {
     margin: 5px 0 5px 30px;
 }
+
+.section-border {
+    margin-top: 50px;
+    color: #b9b7be;
+    font-style: italic;
+    border-top: 2px solid;
+}
+
+.result {
+    margin: 15px 0 0 15px;
+    font-size: 35px;
+}
