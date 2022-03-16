@@ -56,35 +56,27 @@ var quizQuestions = [
     }
 ]
 
-var questionNo = 0
-console.dir(quizQuestions[questionNo].question);
-
 var startQuiz = function() {
     var instruction = document.querySelector("#instruction");
     var confirmInstruction = document.getElementById("instruction");
     var confirmStartBtn = document.getElementById("start-btn");
+    var i = 0;
 
     if (confirmInstruction && confirmStartBtn) {
         instruction.remove();
         startEl.remove();
     
+        switchQuestion(i);
+
+        setAnswers(i);
     }
-    setQuestion(questionNo);
-    console.dir(questionNo);
-
-
-    setAnswers(questionNo);
-
 }
 
-var setQuestion = function(i) {
+var switchQuestion = function(i) {
     mainEl.className = "main-style";
 
-    console.dir(quizQuestions[i].question);
     titleArea.innerHTML = quizQuestions[i].question;
 }
-
-
 
 var setAnswers = function(i) {
     var answerListEl = document.createElement("ol");
@@ -127,14 +119,8 @@ var confirmAnswer = function(selectedBtn) {
     console.log(resultSection);
         
     
-    nextQuestionHandler();
+
     // startQuiz();
-}
-
-var nextQuestionHandler = function() {
-
-    questionNo += 1;
-    startQuiz();
 }
 
 startEl.addEventListener("click", startQuiz, true);
