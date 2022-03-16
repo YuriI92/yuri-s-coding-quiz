@@ -4,21 +4,6 @@ var titleArea = document.querySelector("#title-area");
 var sectionAreaEl = document.querySelector("#section-area");
 var startEl = document.querySelector("#start-btn");
 
-var countdown = function() {
-    var timeLeft = 75;
-
-    var timeInterval = setInterval(function() {
-        if (timeLeft >= 1) {
-            timerEl.innerHTML = "Time: " + timeLeft;
-            timeLeft--;
-        } else {
-            clearInterval(timeInterval);
-        }
-    }, 1000);
-}
-
-var questionNo = 0
-
 // store questions, answers, and correct answer in an array 
 var quizQuestions = [
     {
@@ -71,7 +56,23 @@ var quizQuestions = [
         ],
         correctAnswer: "console.log"
     }
-]
+];
+
+var timeLeft = 75;
+var questionNo = 0;
+
+// starts countdown when the quiz starts (triggered by startQuiz())
+var countdown = function() {
+    var timeInterval = setInterval(function() {
+        if (timeLeft >= 1) {
+            timerEl.innerHTML = "Time: " + timeLeft;
+            timeLeft--;
+        } else {
+            timerEl.innerHTML = "Time: " + timeLeft;
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+}
 
 // starts the quiz when start button is clicked or executed by nextQuestionHandler();
 var startQuiz = function() {
@@ -155,6 +156,8 @@ var confirmAnswer = function(selectedBtn) {
         resultSection.innerHTML = "<p class='result'>Correct!</p>";
     } else {
         resultSection.innerHTML = "<p class='result'>Wrong!</p>";
+        // subtract time for 15 seconds
+        timeLeft -= 15;
     }
 
     nextQuestionHandler();
@@ -162,10 +165,11 @@ var confirmAnswer = function(selectedBtn) {
 
 // prepare for the next question and go to startQuiz() (to be executed by confirmAnswer())
 var nextQuestionHandler = function() {
+    // remove previous question's answers
     var answersList = document.querySelector(".answer-list");
-
     answersList.remove();
 
+    // start next question
     questionNo += 1;
     startQuiz();
 }
