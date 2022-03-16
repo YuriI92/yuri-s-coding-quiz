@@ -1,7 +1,21 @@
+var timerEl = document.querySelector("#countdown")
 var mainEl = document.querySelector("main");
 var titleArea = document.querySelector("#title-area");
 var sectionAreaEl = document.querySelector("#section-area");
 var startEl = document.querySelector("#start-btn");
+
+var countdown = function() {
+    var timeLeft = 75;
+
+    var timeInterval = setInterval(function() {
+        if (timeLeft >= 1) {
+            timerEl.innerHTML = "Time: " + timeLeft;
+            timeLeft--;
+        } else {
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+}
 
 var questionNo = 0
 
@@ -67,6 +81,7 @@ var startQuiz = function() {
 
     // confirm if there are instruction and start button to remove
     if (confirmInstruction && confirmStartBtn) {
+        countdown();
         instruction.remove();
         startEl.remove();
     }
