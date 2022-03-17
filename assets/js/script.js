@@ -61,6 +61,7 @@ var quizQuestions = [
 var timeLeft = 75;
 var timeInterval = "";
 var questionNo = 0;
+var scoreList = [];
 
 // starts countdown when the quiz starts (triggered by startQuiz())
 var countdown = function() {
@@ -179,6 +180,7 @@ var nextQuestionHandler = function() {
     }
 }
 
+// finish quiz when there is no more quiz or the timer hits 0
 var finishQuiz = function() {
     if (questionNo >= quizQuestions.length) {
         titleArea.innerHTML = "All done!"
@@ -188,27 +190,32 @@ var finishQuiz = function() {
         titleArea.innerHTML = "Game Over!"
     }
 
+    // stop timer and show the final time
     clearInterval(timeInterval);
     if (timeLeft <= 0) {
         timeLeft = 0;
     }
     timerEl.innerHTML = "Time: " + timeLeft;
 
+    // show final score
     var finalScoreEl = document.createElement("p");
     finalScoreEl.className = "final-score";
     finalScoreEl.innerHTML = "Your final score is " + timeLeft + ".";
     sectionAreaEl.appendChild(finalScoreEl);
 
+    // to wrap form and button to display flex
     var formWrapperEl = document.createElement("div");
     formWrapperEl.className = "flex-wrap"
 
+    // create a form to let user submit initial
     var enterInitialEl = document.createElement("form");
     enterInitialEl.className = "initial-form";
     enterInitialEl.innerHTML = "<label for='initial'>Enter initials: </label><input type='text' name='initial' id='initial' onfocus='removeResult()'/>";
     formWrapperEl.appendChild(enterInitialEl);
 
+    // when submit button is clicked, save the score and show high scores
     var submitBtn = document.createElement("button");
-    submitBtn.setAttribute("id", "submit-btn");
+    submitBtn.className = "submit-btn";
     submitBtn.setAttribute("onclick", "saveFinalScore()");
     submitBtn.innerHTML = "Submit";
     formWrapperEl.appendChild(submitBtn);
@@ -216,19 +223,69 @@ var finishQuiz = function() {
     sectionAreaEl.appendChild(formWrapperEl);
 }
 
+// remove the result of the quiz(correct or wrong)
 var removeResult = function() {
     var resultSection = document.querySelector("#result-section");
     resultSection.remove();
 }
 
+// save final score to localStorage
 var saveFinalScore = function() {
     var initialInput = document.querySelector("#initial");
-    var scoreList = {
-        userInitial: initialInput.value,
-        userScore: timeLeft
-    }
+    var savedHighScores = localStorage.getItem("scoreList");
 
-    localStorage.setItem("scoreList", JSON.stringify(scoreList));
+    // store the score into an array
+    var newScore = {
+        userInitial: initialInput.value,
+        score: timeLeft
+    };
+
+    // if there is no savedHighScores, save new score
+    if (!savedHighScores) {
+        localStorage.setItem("scoreList", JSON.stringify(newScore));
+    // if there is savedHighScores, save to the existing scoreList
+    } else {
+        savedHighScores = JSON.parse(savedHighScores);
+        savedHighScores.push(newScore);
+        scoreList = savedHighScores;
+        localStorage.setItem("scoreList", JSON.stringify(scoreList));
+    }
+    
+    showHighScores(scoreList);
+}
+
+var showHighScores = function(scoreList) {
+    var finalScoreEl = document.querySelector(".final-score");
+    finalScoreEl.remove();
+    var initialSubmitForm = document.querySelector(".flex-wrap");
+    initialSubmitForm.remove();
+
+    titleArea.innerHTML = "High scores";
+    
+    var highScoresListEl = document.createElement("ol");
+
+    for (var i = 0; i < scoreList.length; i++) {
+        var savedInitial = scoreList[i].userInitial;
+        var savedScore = scoreList[i].score;
+
+        var scoreItemEl = document.createElement("li");
+        scoreItemEl.innerHTML = savedInitial + " - " + savedScore;
+        highScoresListEl.appendChild(scoreItemEl);
+        sectionAreaEl.appendChild(highScoresListEl);
+        // console.dir(scoreList[i].userInitial);
+    }
+    
+    var buttonWrapperEl = document.createElement("div");
+    buttonWrapperEl.className = "flex-wrap";
+    var goBackBtn = document.createElement("button");
+    goBackBtn.className = "secondary-btn";
+    goBackBtn.innerHTML = "Go back";
+    buttonWrapperEl.appendChild(goBackBtn);
+    var clearScoresBtn = document.createElement("button");
+    clearScoresBtn.className = "secondary-btn";
+    clearScoresBtn.innerHTML = "Clear high scores";
+    buttonWrapperEl.appendChild(clearScoresBtn);
+    sectionAreaEl.appendChild(buttonWrapperEl);
 }
 
 startEl.addEventListener("click", startQuiz, true);

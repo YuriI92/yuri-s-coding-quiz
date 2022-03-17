@@ -118,7 +118,7 @@ main button:hover {
     border: 2px solid #419dd6;
 }
 
-#submit-btn {
+.submit-btn {
     padding: 0 20px;
     margin-top: 0;
     font-size: 22px;
