@@ -209,6 +209,7 @@ var finishQuiz = function() {
 
     var submitBtn = document.createElement("button");
     submitBtn.setAttribute("id", "submit-btn");
+    submitBtn.setAttribute("onclick", "saveFinalScore()");
     submitBtn.innerHTML = "Submit";
     formWrapperEl.appendChild(submitBtn);
 
@@ -216,8 +217,18 @@ var finishQuiz = function() {
 }
 
 var removeResult = function() {
-    var resultSection = document.getElementById("result-section");
+    var resultSection = document.querySelector("#result-section");
     resultSection.remove();
+}
+
+var saveFinalScore = function() {
+    var initialInput = document.querySelector("#initial");
+    var scoreList = {
+        userInitial: initialInput.value,
+        userScore: timeLeft
+    }
+
+    localStorage.setItem("scoreList", JSON.stringify(scoreList));
 }
 
 startEl.addEventListener("click", startQuiz, true);
