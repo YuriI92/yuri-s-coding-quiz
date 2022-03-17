@@ -180,9 +180,6 @@ var nextQuestionHandler = function() {
 }
 
 var finishQuiz = function() {
-    clearInterval(timeInterval);
-    timerEl.innerHTML = "Time: " + timeLeft;
-
     if (questionNo >= quizQuestions.length) {
         titleArea.innerHTML = "All done!"
     } else if (timeLeft <= 0) {
@@ -191,20 +188,31 @@ var finishQuiz = function() {
         titleArea.innerHTML = "Game Over!"
     }
 
+    clearInterval(timeInterval);
+    if (timeLeft <= 0) {
+        timeLeft = 0;
+    }
+    timerEl.innerHTML = "Time: " + timeLeft;
+
     var finalScoreEl = document.createElement("p");
     finalScoreEl.className = "final-score";
     finalScoreEl.innerHTML = "Your final score is " + timeLeft + ".";
     sectionAreaEl.appendChild(finalScoreEl);
 
+    var formWrapperEl = document.createElement("div");
+    formWrapperEl.className = "flex-wrap"
+
     var enterInitialEl = document.createElement("form");
-    // enterInitialEl.setAttribute("onfocus", "removeResult()")
+    enterInitialEl.className = "initial-form";
     enterInitialEl.innerHTML = "<label for='initial'>Enter initials: </label><input type='text' name='initial' id='initial' onfocus='removeResult()'/>";
-    sectionAreaEl.appendChild(enterInitialEl);
+    formWrapperEl.appendChild(enterInitialEl);
 
     var submitBtn = document.createElement("button");
     submitBtn.setAttribute("id", "submit-btn");
     submitBtn.innerHTML = "Submit";
-    sectionAreaEl.appendChild(submitBtn);
+    formWrapperEl.appendChild(submitBtn);
+
+    sectionAreaEl.appendChild(formWrapperEl);
 }
 
 var removeResult = function() {

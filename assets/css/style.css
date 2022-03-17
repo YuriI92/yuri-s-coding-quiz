@@ -90,3 +90,32 @@ main button:hover {
     margin: 15px 0 0 15px;
     font-size: 35px;
 }
+
+.final-score {
+    margin: 0;
+    padding: 15px 0 18px 15px;
+    font-size: 28px;
+    line-height: 1;
+}
+
+.flex-wrap {
+    padding-left: 15px;
+    display: flex;
+}
+
+.initial-form {
+    font-size: 28px;
+    margin-right: 20px;
+}
+
+#initial {
+    padding: 3px 8px;
+    font-size: 25px;
+}
+
+#submit-btn {
+    padding: 0 20px;
+    margin-top: 0;
+    font-size: 22px;
+    border-radius: 6px;
+}
