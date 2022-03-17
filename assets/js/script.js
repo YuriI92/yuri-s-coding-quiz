@@ -59,17 +59,17 @@ var quizQuestions = [
 ];
 
 var timeLeft = 75;
+var timeInterval = "";
 var questionNo = 0;
 
 // starts countdown when the quiz starts (triggered by startQuiz())
 var countdown = function() {
-    var timeInterval = setInterval(function() {
+    timeInterval = setInterval(function() {
         if (timeLeft >= 1) {
             timerEl.innerHTML = "Time: " + timeLeft;
             timeLeft--;
         } else {
-            timerEl.innerHTML = "Time: " + timeLeft;
-            clearInterval(timeInterval);
+            finishQuiz();
         }
     }, 1000);
 }
@@ -130,17 +130,17 @@ var setAnswers = function(i) {
 // check answer to see if it's correct or not (to be executed when an answer is clicked)
 var confirmAnswer = function(selectedBtn) {
     // check if there is an id name "result" and remove the section if there is
-    var confirmResultSection = document.getElementById("result");
+    var confirmResultSection = document.getElementById("result-section");
 
     if (confirmResultSection) {
-        var resultSection = document.querySelector("#result");
+        var resultSection = document.querySelector("#result-section");
         resultSection.remove();
     }
 
     // create a section to show the result
     var resultSection = document.createElement("section");
     resultSection.className = "section-border";
-    resultSection.setAttribute("id", "result");
+    resultSection.setAttribute("id", "result-section");
     mainEl.appendChild(resultSection);
 
     var selectedAnswer = selectedBtn.textContent;
@@ -171,7 +171,45 @@ var nextQuestionHandler = function() {
 
     // start next question
     questionNo += 1;
-    startQuiz();
+    if (questionNo === quizQuestions.length) {
+        
+        finishQuiz();
+    } else {
+        startQuiz();
+    }
+}
+
+var finishQuiz = function() {
+    clearInterval(timeInterval);
+    timerEl.innerHTML = "Time: " + timeLeft;
+
+    if (questionNo >= quizQuestions.length) {
+        titleArea.innerHTML = "All done!"
+    } else if (timeLeft <= 0) {
+        var answersList = document.querySelector(".answer-list");
+        answersList.remove();
+        titleArea.innerHTML = "Game Over!"
+    }
+
+    var finalScoreEl = document.createElement("p");
+    finalScoreEl.className = "final-score";
+    finalScoreEl.innerHTML = "Your final score is " + timeLeft + ".";
+    sectionAreaEl.appendChild(finalScoreEl);
+
+    var enterInitialEl = document.createElement("form");
+    // enterInitialEl.setAttribute("onfocus", "removeResult()")
+    enterInitialEl.innerHTML = "<label for='initial'>Enter initials: </label><input type='text' name='initial' id='initial' onfocus='removeResult()'/>";
+    sectionAreaEl.appendChild(enterInitialEl);
+
+    var submitBtn = document.createElement("button");
+    submitBtn.setAttribute("id", "submit-btn");
+    submitBtn.innerHTML = "Submit";
+    sectionAreaEl.appendChild(submitBtn);
+}
+
+var removeResult = function() {
+    var resultSection = document.getElementById("result-section");
+    resultSection.remove();
 }
 
 startEl.addEventListener("click", startQuiz, true);
