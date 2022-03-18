@@ -242,7 +242,8 @@ var saveFinalScore = function() {
 
     // if there is no savedHighScores, save new score
     if (!savedHighScores) {
-        localStorage.setItem("scoreList", JSON.stringify(newScore));
+        scoreList.push(newScore);
+        localStorage.setItem("scoreList", JSON.stringify(scoreList));
     // if there is savedHighScores, save to the existing scoreList
     } else {
         savedHighScores = JSON.parse(savedHighScores);
@@ -274,6 +275,7 @@ var showHighScores = function(scoreList) {
     // create ordered list element to hold score list items
     var highScoresListEl = document.createElement("ol");
     highScoresListEl.className = "high-scores-list";
+    
     // create list items until the end of the score list
     for (var i = 0; i < scoreList.length; i++) {
         var savedInitial = scoreList[i].userInitial;
@@ -293,15 +295,29 @@ var showHighScores = function(scoreList) {
 
     var goBackBtn = document.createElement("button");
     goBackBtn.className = "secondary-btn";
-    goBackBtn.innerHTML = "Go back";
+    goBackBtn.innerHTML = "<a href='./index.html'>Go back</a>";
     buttonWrapperEl.appendChild(goBackBtn);
 
     var clearScoresBtn = document.createElement("button");
     clearScoresBtn.className = "secondary-btn";
+    clearScoresBtn.setAttribute("onclick", "clearHighScores(scoreList)");
     clearScoresBtn.innerHTML = "Clear high scores";
     buttonWrapperEl.appendChild(clearScoresBtn);
-    
+
     sectionAreaEl.appendChild(buttonWrapperEl);
+}
+
+var clearHighScores = function(scoreList) {
+    var clearConfirm = confirm("Are you sure you want to clear high scores?");
+    var scoreItemEl = document.querySelector(".score-item");
+
+    if (!clearConfirm) {
+        return false;
+    } else {
+        localStorage.removeItem("scoreList");
+        scoreItemEl.remove();
+        console.dir(scoreItemEl);
+    }
 }
 
 startEl.addEventListener("click", startQuiz, true);

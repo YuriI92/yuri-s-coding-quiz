@@ -153,3 +153,8 @@ main button:hover {
     font-size: 22px;
     border-radius: 6px;
 }
+
+.secondary-btn a {
+    text-decoration: none;
+    color: var(--tertiary);
+}
