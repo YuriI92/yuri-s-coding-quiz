@@ -131,10 +131,9 @@ var setAnswers = function(i) {
 // check answer to see if it's correct or not (to be executed when an answer is clicked)
 var confirmAnswer = function(selectedBtn) {
     // check if there is an id name "result" and remove the section if there is
-    var confirmResultSection = document.getElementById("result-section");
+    var resultSection = document.querySelector("#result-section");
 
-    if (confirmResultSection) {
-        var resultSection = document.querySelector("#result-section");
+    if (resultSection) {
         resultSection.remove();
     }
 
@@ -254,16 +253,33 @@ var saveFinalScore = function() {
         localStorage.setItem("scoreList", JSON.stringify(scoreList));
     }
     
-    showHighScores(scoreList);
+    showHighScores();
 }
 
-// show ranked high scores
-var showHighScores = function(scoreList) {
+// show ranked high scores from the first screen and with submit button
+var showHighScores = function() {
+    mainEl.className = "main-style";
+    // check if any scores stored in the storage and set them to score list
+    // if not, set blank array to score list
+    scoreList = localStorage.getItem("scoreList");
+    if (scoreList) {
+        scoreList = JSON.parse(scoreList);
+    } else {
+        scoreList = [];
+    }
+    
     // remove final score and submit form elements
     var finalScoreEl = document.querySelector(".final-score");
-    finalScoreEl.remove();
-    var initialSubmitForm = document.querySelector(".flex-wrap");
-    initialSubmitForm.remove();
+    if (finalScoreEl) {
+        finalScoreEl.remove();
+        var initialSubmitForm = document.querySelector(".flex-wrap");
+        initialSubmitForm.remove();
+    } else {
+        var instructionEl = document.getElementById("instruction");
+        var startEl = document.getElementById("start-btn");
+        instructionEl.remove();
+        startEl.remove();
+    }
     var viewScoresEl = document.querySelector(".view-scores");
     viewScoresEl.textContent = "";
     var countdownEl = document.querySelector("#countdown");
@@ -300,23 +316,34 @@ var showHighScores = function(scoreList) {
 
     var clearScoresBtn = document.createElement("button");
     clearScoresBtn.className = "secondary-btn";
-    clearScoresBtn.setAttribute("onclick", "clearHighScores(scoreList)");
+    clearScoresBtn.setAttribute("onclick", "clearHighScores()");
     clearScoresBtn.innerHTML = "Clear high scores";
     buttonWrapperEl.appendChild(clearScoresBtn);
 
     sectionAreaEl.appendChild(buttonWrapperEl);
 }
 
-var clearHighScores = function(scoreList) {
-    var clearConfirm = confirm("Are you sure you want to clear high scores?");
-    var scoreItemEl = document.querySelector(".score-item");
-
+// clear high scores in localStorage and remove li elements
+var clearHighScores = function() {
+    var scoreList = localStorage.getItem("scoreList");
+    if (scoreList) {
+        var clearConfirm = window.confirm("Are you sure you want to clear high scores?");
+    } else {
+        window.alert("No scores to clear.");
+        return false;
+    }
+    
+    // if cancelled by a user, nothing happens
     if (!clearConfirm) {
         return false;
     } else {
+        scoreList = JSON.parse(scoreList);
+        // console.log(scoreList.length);
+        for (var i = 0; i < scoreList.length; i++) {
+            var scoreItemEl = document.querySelector(".score-item");
+            scoreItemEl.remove();
+        }
         localStorage.removeItem("scoreList");
-        scoreItemEl.remove();
-        console.dir(scoreItemEl);
     }
 }
 

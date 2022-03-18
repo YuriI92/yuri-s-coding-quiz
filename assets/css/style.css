@@ -26,7 +26,8 @@ header p {
     margin-bottom: 20px;
 }
 
-.view-scores {
+.view-scores a {
+    text-decoration: none;
     color: var(--primary);
 }
 /* HEADER STYLE END */
