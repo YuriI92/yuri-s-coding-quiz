@@ -248,22 +248,29 @@ var saveFinalScore = function() {
         savedHighScores = JSON.parse(savedHighScores);
         savedHighScores.push(newScore);
         scoreList = savedHighScores;
+        // sort score list by scores (high to low)
+        scoreList.sort((a, b) => b.score - a.score)
         localStorage.setItem("scoreList", JSON.stringify(scoreList));
     }
     
     showHighScores(scoreList);
 }
 
+// show ranked high scores
 var showHighScores = function(scoreList) {
+    // remove final score and submit form elements
     var finalScoreEl = document.querySelector(".final-score");
     finalScoreEl.remove();
     var initialSubmitForm = document.querySelector(".flex-wrap");
     initialSubmitForm.remove();
 
+    // replace title area with "high scores"
     titleArea.innerHTML = "High scores";
     
+    // create ordered list element to hold score list items
     var highScoresListEl = document.createElement("ol");
 
+    // create list items until the end of the score list
     for (var i = 0; i < scoreList.length; i++) {
         var savedInitial = scoreList[i].userInitial;
         var savedScore = scoreList[i].score;
@@ -275,6 +282,7 @@ var showHighScores = function(scoreList) {
         // console.dir(scoreList[i].userInitial);
     }
     
+    // create buttons to go back and clear high scores
     var buttonWrapperEl = document.createElement("div");
     buttonWrapperEl.className = "flex-wrap";
     var goBackBtn = document.createElement("button");
