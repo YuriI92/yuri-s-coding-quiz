@@ -263,36 +263,44 @@ var showHighScores = function(scoreList) {
     finalScoreEl.remove();
     var initialSubmitForm = document.querySelector(".flex-wrap");
     initialSubmitForm.remove();
+    var viewScoresEl = document.querySelector(".view-scores");
+    viewScoresEl.textContent = "";
+    var countdownEl = document.querySelector("#countdown");
+    countdownEl.textContent = "";
 
     // replace title area with "high scores"
     titleArea.innerHTML = "High scores";
     
     // create ordered list element to hold score list items
     var highScoresListEl = document.createElement("ol");
-
+    highScoresListEl.className = "high-scores-list";
     // create list items until the end of the score list
     for (var i = 0; i < scoreList.length; i++) {
         var savedInitial = scoreList[i].userInitial;
         var savedScore = scoreList[i].score;
 
         var scoreItemEl = document.createElement("li");
+        scoreItemEl.className = "score-item";
         scoreItemEl.innerHTML = savedInitial + " - " + savedScore;
         highScoresListEl.appendChild(scoreItemEl);
-        sectionAreaEl.appendChild(highScoresListEl);
         // console.dir(scoreList[i].userInitial);
     }
+    sectionAreaEl.appendChild(highScoresListEl);
     
     // create buttons to go back and clear high scores
     var buttonWrapperEl = document.createElement("div");
     buttonWrapperEl.className = "flex-wrap";
+
     var goBackBtn = document.createElement("button");
     goBackBtn.className = "secondary-btn";
     goBackBtn.innerHTML = "Go back";
     buttonWrapperEl.appendChild(goBackBtn);
+
     var clearScoresBtn = document.createElement("button");
     clearScoresBtn.className = "secondary-btn";
     clearScoresBtn.innerHTML = "Clear high scores";
     buttonWrapperEl.appendChild(clearScoresBtn);
+    
     sectionAreaEl.appendChild(buttonWrapperEl);
 }
 
