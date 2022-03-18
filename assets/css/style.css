@@ -137,7 +137,7 @@ main button:hover {
     border-radius: 6px;
 }
 
-/* HIGH SCORES SCREEN STYLE */
+/* HIGH SCORES SCREEN STYLE START */
 .high-scores-list {
     margin: 10px 20px;
 }
@@ -163,12 +163,15 @@ main button:hover {
     text-decoration: none;
     color: var(--tertiary);
 }
+/* HIGH SCORE SCREEN STYLE END */
 
+/* RESPONSIVE DESIGNS START */
 @media screen and (max-width: 980px) {
     main p {
         width: 70%;
     }
 
+    /* QUESTIONS START FROM HERE */
     .main-style {
         width: 75%;
     }
@@ -185,6 +188,7 @@ main button:hover {
         margin-top: 0;
     }
 
+    /* QUESTIONS START FROM HERE */
     .main-style {
         margin-top: 0;
     }
@@ -193,6 +197,7 @@ main button:hover {
         width: 50vh;
     }
 
+    /* FINAL SCORE SCREEN */
     .initial-form {
         display: flex;
         flex-direction: column;
@@ -223,6 +228,7 @@ main button:hover {
         width: 80%;
     }
 
+    /* QUESTIONS START FROM HERE */
     .main-style {
         width: 90%;
     }
@@ -237,7 +243,9 @@ main button:hover {
         margin: 15px auto 0 auto;
     }
 
+    /* FINAL SCORE SCREEN AND HIGH SCORE SCREEN */
     .flex-wrap {
         flex-wrap: wrap;
     }
 }
+/* RESPONSIVE DESIGNS END */
