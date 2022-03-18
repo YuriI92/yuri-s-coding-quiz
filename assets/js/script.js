@@ -157,7 +157,7 @@ var confirmAnswer = function(selectedBtn) {
     } else {
         resultSection.innerHTML = "<p class='result'>Wrong!</p>";
         // subtract time for 15 seconds
-        timeLeft -= 15;
+        timeLeft -= 10;
     }
 
     nextQuestionHandler();

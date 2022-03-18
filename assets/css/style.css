@@ -18,7 +18,7 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    font-size: 20px;
+    font-size: 4.5vh;
 }
 
 header p {
@@ -39,21 +39,23 @@ main {
 
 /* TITLES */
 main h1 {
-    font-size: 42px;
+    font-size: 9vh;
     padding: 15px;
 }
 
+/* INSTRUCTION */
 main p {
-    margin: 15px 300px 20px 300px;
-    font-size: 23px;
+    margin: 15px auto;
+    font-size: 5vh;
     line-height: 1.3;
+    width: 55%;
 }
 
 /* BUTTONS */
 main button {
     padding: 10px 25px;
     margin-top: 15px;
-    font-size: 27px;
+    font-size: 5.5vh;
     color: var(--tertiary);
     background-color: var(--secondary);
     border-radius: 10px;
@@ -64,10 +66,11 @@ main button:hover {
     background-color: var(--primary);
 }
 
+/* MAIN STYLE CHANGE WHEN QUESTIONS START */
 .main-style {
     text-align: left;
-    margin-right: 280px;
-    margin-left: 280px;
+    margin: 20px auto;
+    width: 70%;
 }
 
 /* ANSWERS STYLE */
@@ -78,7 +81,8 @@ main button:hover {
 
 .answer-btn {
     text-align: left;
-    width: 50vh;
+    width: 70vh;
+    margin-left: 20px;
 }
 
 .answer {
@@ -95,14 +99,14 @@ main button:hover {
 
 .result {
     margin: 15px 0 0 15px;
-    font-size: 35px;
+    font-size: 8vh;
 }
 
 /* FINAL SCORE SCREEN STYLE */
 .final-score {
     margin: 0;
     padding: 15px 0 18px 15px;
-    font-size: 28px;
+    font-size: 6vh;
     line-height: 1;
 }
 
@@ -112,13 +116,13 @@ main button:hover {
 }
 
 .initial-form {
-    font-size: 28px;
+    font-size: 6vh;
     margin-right: 20px;
 }
 
 #initial {
     padding: 3px 8px;
-    font-size: 25px;
+    font-size: 5.5vh;
 }
 
 #initial:focus {
@@ -129,7 +133,7 @@ main button:hover {
 .submit-btn {
     padding: 0 20px;
     margin-top: 0;
-    font-size: 22px;
+    font-size: 5vh;
     border-radius: 6px;
 }
 
@@ -139,7 +143,7 @@ main button:hover {
 }
 
 .score-item {
-    font-size: 22px;
+    font-size: 5vh;
     padding: 8px 12px;
     list-style-position: inside;
 }
@@ -151,11 +155,89 @@ main button:hover {
 .secondary-btn {
     margin: 10px 5px;
     padding: 8px 15px;
-    font-size: 22px;
+    font-size: 5vh;
     border-radius: 6px;
 }
 
 .secondary-btn a {
     text-decoration: none;
     color: var(--tertiary);
+}
+
+@media screen and (max-width: 980px) {
+    main p {
+        width: 70%;
+    }
+
+    .main-style {
+        width: 75%;
+    }
+
+    .answer-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: start;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        margin-top: 0;
+    }
+
+    .main-style {
+        margin-top: 0;
+    }
+
+    .answer-btn {
+        width: 50vh;
+    }
+
+    .initial-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #initial {
+        margin-top: 10px;
+    }
+
+    .submit-btn {
+        margin-top: 40px;
+        padding: 8px 15px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    header p {
+        padding: 20px 25px;
+        margin: 0;
+    }
+
+    main h1 {
+        font-size: 43px;
+        padding: 15px 20px;
+    }
+
+    main p {
+        width: 80%;
+    }
+
+    .main-style {
+        width: 90%;
+    }
+
+    .answer-list {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .answer-btn {
+        width: 60vh;
+        margin: 15px auto 0 auto;
+    }
+
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
 }
