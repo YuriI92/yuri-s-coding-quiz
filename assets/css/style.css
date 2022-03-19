@@ -69,8 +69,8 @@ main button:hover {
 /* MAIN STYLE CHANGE WHEN QUESTIONS START */
 .main-style {
     text-align: left;
-    margin: 0 auto;
-    width: 70%;
+    margin-left: 300px;
+    width: 75%;
 }
 
 /* ANSWERS STYLE */
@@ -147,6 +147,7 @@ main button:hover {
 .score-item {
     font-size: 1.8vw;
     padding: 8px 12px;
+    margin-right: 200px;
     list-style-position: inside;
 }
 

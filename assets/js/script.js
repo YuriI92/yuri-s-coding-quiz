@@ -68,15 +68,10 @@ var scoreList = [];
 var countdown = function() {
     timeInterval = setInterval(function() {
         if (timeLeft >= 1) {
-            if (titleArea.textContent === "All done!" || titleArea.textContent === "High scores") {
-                clearInterval(timeInterval);
-            } else {
-                timerEl.innerHTML = "Time: " + timeLeft;
-                timeLeft--;
-            }
-        } else {
-            clearInterval(timeInterval);
             timerEl.innerHTML = "Time: " + timeLeft;
+            timeLeft--;
+        } else {
+            finishQuiz();
         }
     }, 1000);
 }
@@ -84,7 +79,9 @@ var countdown = function() {
 // starts the quiz when start button is clicked or executed by nextQuestionHandler();
 var startQuiz = function() {
     // confirm if there are instruction and start button to remove
-    if (instructionEl && startEl) {
+    var confirmInstruction = document.getElementById("instruction");
+    var confirmStartBtn = document.getElementById("start-btn");
+    if (confirmInstruction && confirmStartBtn) {
         countdown();
         instructionEl.remove();
         startEl.remove();
@@ -102,6 +99,7 @@ var setQuestion = function(i) {
     mainEl.className = "main-style";
 
     // set a question to the place there was a title of the quiz
+    console.dir(quizQuestions[i]);
     titleArea.innerHTML = quizQuestions[i].question;
 }
 
@@ -132,12 +130,13 @@ var setAnswers = function(i) {
 
 // check answer to see if it's correct or not (to be executed when an answer is clicked)
 var confirmAnswer = function(selectedBtn) {
+    // debugger;
     // check if there is an id name "result" and remove the section if there is
-    var resultSection = document.querySelector("#result-section");
-
-    if (resultSection) {
-        resultSection.remove();
-    }
+    // var resultSection = document.querySelector("#result-section");
+    // if (resultSection) {
+    //     resultSection.remove();
+    // }
+    removeResult();
 
     // create a section to show the result
     var resultSection = document.createElement("section");
@@ -146,12 +145,10 @@ var confirmAnswer = function(selectedBtn) {
     mainEl.appendChild(resultSection);
 
     var selectedAnswer = selectedBtn.textContent;
-    console.log(selectedAnswer);
-    var answerBtnEl = document.querySelector(".answer-btn");
-    var questionNo = answerBtnEl.getAttribute("data-question-id");
-    
+    var answerBtnEl = document.querySelector(".answer-btn");    
     var correctAnswer = quizQuestions[questionNo].correctAnswer;
-    console.dir(correctAnswer);
+
+    questionNo = parseInt(answerBtnEl.getAttribute("data-question-id"));
     
     // if the answer user selected is the correct answer, it will show "Correct" and if it's wrong show "Wrong"
     if (selectedAnswer === correctAnswer) {
@@ -162,14 +159,15 @@ var confirmAnswer = function(selectedBtn) {
         timeLeft -= 10;
     }
 
-    nextQuestionHandler();
+    nextQuestionHandler(questionNo);
 }
 
 // prepare for the next question and go to startQuiz() (to be executed by confirmAnswer())
 var nextQuestionHandler = function() {
     // remove previous question's answers
-    var answersList = document.querySelector(".answer-list");
-    answersList.remove();
+    // var answersList = document.querySelector(".answer-list");
+    // answersList.remove();
+    removeAnswersList();
 
     // start next question
     questionNo += 1;
@@ -185,9 +183,7 @@ var finishQuiz = function() {
     if (questionNo >= quizQuestions.length) {
         titleArea.innerHTML = "All done!"
     } else if (timeLeft <= 0) {
-        var answersList = document.querySelector(".answer-list");
-        answersList.remove();
-        clearInterval(timeInterval);
+        removeAnswersList();
         titleArea.innerHTML = "Game Over!"
     }
 
@@ -222,12 +218,6 @@ var finishQuiz = function() {
     formWrapperEl.appendChild(submitBtn);
 
     sectionAreaEl.appendChild(formWrapperEl);
-}
-
-// remove the result of the quiz(correct or wrong)
-var removeResult = function() {
-    var resultSection = document.querySelector("#result-section");
-    resultSection.remove();
 }
 
 // save final score to localStorage
@@ -301,7 +291,6 @@ var showHighScores = function() {
         scoreItemEl.className = "score-item";
         scoreItemEl.innerHTML = savedInitial + " - " + savedScore;
         highScoresListEl.appendChild(scoreItemEl);
-        // console.dir(scoreList[i].userInitial);
     }
     sectionAreaEl.appendChild(highScoresListEl);
     
@@ -338,12 +327,29 @@ var clearHighScores = function() {
         return false;
     } else {
         scoreList = JSON.parse(scoreList);
-        // console.log(scoreList.length);
+
         for (var i = 0; i < scoreList.length; i++) {
             var scoreItemEl = document.querySelector(".score-item");
             scoreItemEl.remove();
         }
+
         localStorage.removeItem("scoreList");
+    }
+}
+
+// remove the result of the quiz(correct or wrong)
+var removeResult = function() {
+    var resultSection = document.querySelector("#result-section");
+    if (resultSection) {
+        resultSection.remove();
+    }
+}
+
+// remove answers list for the quiz
+var removeAnswersList = function() {
+    var answersList = document.querySelector(".answer-list");
+    if (answersList) {
+        answersList.remove();
     }
 }
 
