@@ -2,6 +2,7 @@ var timerEl = document.querySelector("#countdown")
 var mainEl = document.querySelector("main");
 var titleArea = document.querySelector("#title-area");
 var sectionAreaEl = document.querySelector("#section-area");
+var instructionEl = document.querySelector("#instruction");
 var startEl = document.querySelector("#start-btn");
 
 // store questions, answers, and correct answer in an array 
@@ -67,24 +68,25 @@ var scoreList = [];
 var countdown = function() {
     timeInterval = setInterval(function() {
         if (timeLeft >= 1) {
-            timerEl.innerHTML = "Time: " + timeLeft;
-            timeLeft--;
+            if (titleArea.textContent === "All done!" || titleArea.textContent === "High scores") {
+                clearInterval(timeInterval);
+            } else {
+                timerEl.innerHTML = "Time: " + timeLeft;
+                timeLeft--;
+            }
         } else {
-            finishQuiz();
+            clearInterval(timeInterval);
+            timerEl.innerHTML = "Time: " + timeLeft;
         }
     }, 1000);
 }
 
 // starts the quiz when start button is clicked or executed by nextQuestionHandler();
 var startQuiz = function() {
-    var instruction = document.querySelector("#instruction");
-    var confirmInstruction = document.getElementById("instruction");
-    var confirmStartBtn = document.getElementById("start-btn");
-
     // confirm if there are instruction and start button to remove
-    if (confirmInstruction && confirmStartBtn) {
+    if (instructionEl && startEl) {
         countdown();
-        instruction.remove();
+        instructionEl.remove();
         startEl.remove();
     }
 
@@ -172,7 +174,6 @@ var nextQuestionHandler = function() {
     // start next question
     questionNo += 1;
     if (questionNo === quizQuestions.length) {
-        
         finishQuiz();
     } else {
         startQuiz();
@@ -186,6 +187,7 @@ var finishQuiz = function() {
     } else if (timeLeft <= 0) {
         var answersList = document.querySelector(".answer-list");
         answersList.remove();
+        clearInterval(timeInterval);
         titleArea.innerHTML = "Game Over!"
     }
 
@@ -275,8 +277,6 @@ var showHighScores = function() {
         var initialSubmitForm = document.querySelector(".flex-wrap");
         initialSubmitForm.remove();
     } else {
-        var instructionEl = document.getElementById("instruction");
-        var startEl = document.getElementById("start-btn");
         instructionEl.remove();
         startEl.remove();
     }
