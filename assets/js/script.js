@@ -99,7 +99,6 @@ var setQuestion = function(i) {
     mainEl.className = "main-style";
 
     // set a question to the place there was a title of the quiz
-    console.dir(quizQuestions[i]);
     titleArea.innerHTML = quizQuestions[i].question;
 }
 
@@ -130,12 +129,6 @@ var setAnswers = function(i) {
 
 // check answer to see if it's correct or not (to be executed when an answer is clicked)
 var confirmAnswer = function(selectedBtn) {
-    // debugger;
-    // check if there is an id name "result" and remove the section if there is
-    // var resultSection = document.querySelector("#result-section");
-    // if (resultSection) {
-    //     resultSection.remove();
-    // }
     removeResult();
 
     // create a section to show the result
@@ -164,9 +157,6 @@ var confirmAnswer = function(selectedBtn) {
 
 // prepare for the next question and go to startQuiz() (to be executed by confirmAnswer())
 var nextQuestionHandler = function() {
-    // remove previous question's answers
-    // var answersList = document.querySelector(".answer-list");
-    // answersList.remove();
     removeAnswersList();
 
     // start next question
