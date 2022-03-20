@@ -26,7 +26,7 @@ This is a game to test the coding skills. By setting time as a score and -10 sec
 * JavaScript
 
 ## Website
-<!-- https://yurii92.github.io/password-generator/ -->
+https://yurii92.github.io/yuri-s-coding-quiz/
 ![alt text](./assets/images/01_first-screen.png)
 
 ## Contribution
