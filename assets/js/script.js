@@ -67,7 +67,10 @@ var scoreList = [];
 // starts countdown when the quiz starts (triggered by startQuiz())
 var countdown = function() {
     timeInterval = setInterval(function() {
-        if (timeLeft >= 1) {
+        // if high score is viewed, stop the timer or else continue timer
+        if (titleArea.textContent === "High scores") {
+            clearInterval(timeInterval);
+        } else if (timeLeft >= 1) {
             timerEl.innerHTML = "Time: " + timeLeft;
             timeLeft--;
         } else {
@@ -256,10 +259,14 @@ var showHighScores = function() {
         finalScoreEl.remove();
         var initialSubmitForm = document.querySelector(".flex-wrap");
         initialSubmitForm.remove();
+    // if view high scores from the first screen, remove instruction and start button
     } else {
         instructionEl.remove();
         startEl.remove();
     }
+    // if middle of the quiz, remove answers list
+    removeAnswersList();
+
     var viewScoresEl = document.querySelector(".view-scores");
     viewScoresEl.textContent = "";
     var countdownEl = document.querySelector("#countdown");
